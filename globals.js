@@ -282,8 +282,16 @@ function centerClickEventRegister() {
 	//adapted from https://github.com/gsburmaster/Connect4
     //adapted from https://jayhawk-nation.web.app/examples/TicTacToe
     document.addEventListener("click", click1 => {
-        if (g_mode != "start") {
-            return;
+        if (g_mode == "menu1") {
+            pos = getXY(canvas, click1);
+            if(pos.x > 20 && pos.x < 170 && pos.y > 20 && pos.y < 120){
+                console.log("human");
+                g_mode = "start";
+            }
+            if(pos.x > 190 && pos.x < 340 && pos.y > 20 && pos.y < 120){
+                console.log("computer");
+                g_mode = "menu2";
+            }
         }
         pos = getXY(canvas, click1);
         const [i, j] = [RoundClickX(pos.x, centerGrid.totalwidth, centerGrid.rightmost), RoundClickY(pos.y, centerGrid.totalheight, centerGrid.heightmost)]
