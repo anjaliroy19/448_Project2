@@ -335,7 +335,8 @@ function startButtonRegister() {
     document.getElementById("startButton").addEventListener('click', e => {
         if (g_mode == "unstarted") {
             g_maxShips = document.getElementById("number_of_ships").value;
-            g_mode = "start";
+            //g_mode = "start";
+            g_mode = "menu1";
         }
     });
 }

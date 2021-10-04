@@ -128,6 +128,43 @@ function renderGameplay(context, canvas, leftShips, rightShips) {
     //showPotMove();
 }
 
+function renderMenu1(context, canvas) {
+    clearScreen(context);
+
+    context.beginPath();
+    context.rect(20, 20, 150, 100);
+    context.stroke();
+
+    context.beginPath();
+    context.rect(190, 20, 150, 100);
+    context.stroke();
+
+    context.font = "10pt sans-serif";
+    context.fillText("Play Against Human", 25, 100);
+    context.fillText("Play Against Computer", 200, 100);
+}
+
+function renderMenu2(context, canvas) {
+    clearScreen(context);
+
+    context.beginPath();
+    context.rect(20, 20, 150, 100);
+    context.stroke();
+
+    context.beginPath();
+    context.rect(190, 20, 150, 100);
+    context.stroke();
+
+    context.beginPath();
+    context.rect(360, 20, 150, 100);
+    context.stroke();
+
+    context.font = "10pt sans-serif";
+    context.fillText("Easy", 25, 100);
+    context.fillText("Medium", 200, 100);
+    context.fillText("Hard", 375, 100);
+}
+
 /**
  * @description called everytime potMove variable is updated from event listener
  */

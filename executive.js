@@ -19,6 +19,9 @@ function gameplayLoop() {
             }
         }
     }
+    else if(g_mode == "menu1"){
+        renderMenu1(g_context, g_canvas);
+    }
     else if (g_mode == "game" || g_mode == "switch2") {
         if (g_currentPlayer == 1) {
             renderGameplay(g_context, g_canvas, g_player1arr, g_player2arr);
