@@ -12,6 +12,9 @@ let g_canvas;
 let g_context;
 let g_mode = "unstarted";
 let g_potMove = '';
+
+let AI = 1;
+
 let g_opponent = '';
 
 //taken from https://github.com/gsburmaster/Connect4
@@ -254,20 +257,38 @@ function rightsideClickEventRegister() {
         if (i < 0 || i > 9 || j < 0 || j > 8) {
             return;
         }
-        
-        if (g_currentPlayer == 1 && fire(g_player2arr, flatten(i,j))) {
-            if (winCheck(g_player2arr)) {
-                g_winner = 1;
-                g_mode = "win";
-            } else {
-                switchPlayers("game");
+        if(g_opponent == "human"){
+            if (g_currentPlayer == 1 && fire(g_player2arr, flatten(i,j))) {
+                if (winCheck(g_player2arr)) {
+                    g_winner = 1;
+                    g_mode = "win";
+                } else {
+                    switchPlayers("game");
+                }
+            } else if (g_currentPlayer == 2 && fire(g_player1arr, flatten(i,j))){
+                if (winCheck(g_player1arr)) {
+                    g_winner = 2;
+                    g_mode = "win";
+                } else {
+                    switchPlayers("game");
+                }
             }
-        } else if (g_currentPlayer == 2 && fire(g_player1arr, flatten(i,j))){
-            if (winCheck(g_player1arr)) {
-                g_winner = 2;
-                g_mode = "win";
-            } else {
-                switchPlayers("game");
+        }
+        else if(g_opponent == "hard"){
+            if (g_currentPlayer == 1 && fire(g_player2arr, flatten(i,j))) {
+                if (winCheck(g_player2arr)) {
+                    g_winner = 1;
+                    g_mode = "win";
+                } else {
+                    switchPlayers("game");
+                }
+            } else if (g_currentPlayer == 2 && fireHard(g_player1arr)){
+                if (winCheck(g_player1arr)) {
+                    g_winner = 2;
+                    g_mode = "win";
+                } else {
+                    switchPlayers("game");
+                }
             }
         }
     })

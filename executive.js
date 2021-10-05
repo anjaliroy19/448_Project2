@@ -2,7 +2,7 @@
  * @desc This function runs the main gameplay loop, we allow it to access and modify global game data
  */
 function gameplayLoop() {
-    if (g_mode == "start") {
+    if (g_mode == "start" && g_opponent == "human") {
         if (g_currentPlayer == 1) {
             renderPlacementScreen(g_context, g_canvas, placeShip(g_player1arr, g_mousePos, g_currShipLength, g_currShipRotation));
             if (g_currShipLength > g_maxShips) {
@@ -16,6 +16,44 @@ function gameplayLoop() {
             renderPlacementScreen(g_context, g_canvas, placeShip(g_player2arr, g_mousePos, g_currShipLength, g_currShipRotation));
             if (g_currShipLength > g_maxShips) {
                 switchPlayers("game");
+            }
+        }
+    }
+    if (g_mode == "start" && g_opponent == "hard") {
+        if (AI == 1){
+            if (g_currentPlayer == 1) {
+                renderPlacementScreen(g_context, g_canvas, placeShip(g_player1arr, g_mousePos, g_currShipLength, g_currShipRotation));
+                if (g_currShipLength > g_maxShips) {
+                    switchPlayers("start");
+                    g_currShipLength = 1;
+                    g_currShipRotation = 0;
+                    g_mousePos = 0;
+                }
+            }
+            else if (g_currentPlayer == 2){
+                //generate randomPos and rotation (plus check that Ship length is updating)
+                let AIpos = generateRandomPosition();
+                placeShip(g_player2arr, AIpos, g_currShipLength, g_currShipRotation);
+                if (g_currShipLength > g_maxShips) {
+                    switchPlayers("game");
+                }
+            }
+        }
+        else{
+            if (g_currentPlayer == 1) {
+                renderPlacementScreen(g_context, g_canvas, placeShip(g_player1arr, g_mousePos, g_currShipLength, g_currShipRotation));
+                if (g_currShipLength > g_maxShips) {
+                    switchPlayers("start");
+                    g_currShipLength = 1;
+                    g_currShipRotation = 0;
+                    g_mousePos = 0;
+                }
+            }
+            else if (g_currentPlayer == 2) {
+                renderPlacementScreen(g_context, g_canvas, placeShip(g_player2arr, g_mousePos, g_currShipLength, g_currShipRotation));
+                if (g_currShipLength > g_maxShips) {
+                    switchPlayers("game");
+                }
             }
         }
     }
@@ -77,6 +115,20 @@ function switchPlayers(mode) {
     });
 }
 
+function generateRandomPosition(){
+    let AIpos = 0;
+    AIpos = Math.random() * 89; //generates random num betwene 0 and 89
+    AIpos = parseInt(AIpos);
+    console.log(AIpos);// for debugging purposes
+    newShips = placeShip(g_player2arr, AIpos, g_currShipLength, g_currShipRotation); //taken from gage's code
+    if (!newShips.every((el, ix) => el === g_player2arr[ix])) { //taken from gage's code
+        g_player2arr = newShips;
+        g_currShipLength++;
+    }
+
+    return AIpos;
+}
+
 /**
  * @desc This function checks if a shot is valid
  * @param {number[]} arr the grid being fired at
@@ -96,6 +148,14 @@ function fire(arr, pos) {
     return false;
 }
 
+function fireHard(arr) {
+	for(let i = 0; i < arr.length; i++){
+        if(arr[i] == 1){
+            arr[i] = 2;
+            return true;
+        }
+    }
+}
 
 /**
  * @desc This function places ships
