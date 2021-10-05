@@ -12,6 +12,7 @@ let g_canvas;
 let g_context;
 let g_mode = "unstarted";
 let g_potMove = '';
+let g_opponent = '';
 
 //taken from https://github.com/gsburmaster/Connect4
 //adapted from https://jayhawk-nation.web.app/examples/TicTacToe
@@ -285,12 +286,22 @@ function centerClickEventRegister() {
         if (g_mode == "menu1") {
             pos = getXY(canvas, click1);
             if(pos.x > 20 && pos.x < 170 && pos.y > 20 && pos.y < 120){
-                console.log("human");
+                g_opponent = 'human';
                 g_mode = "start";
             }
-            if(pos.x > 190 && pos.x < 340 && pos.y > 20 && pos.y < 120){
-                console.log("computer");
+            else if(pos.x > 190 && pos.x < 340 && pos.y > 20 && pos.y < 120){
                 g_mode = "menu2";
+            }
+        }
+        else if (g_mode == "menu2") {
+            pos = getXY(canvas, click1);
+            if(pos.x > 20 && pos.x < 170 && pos.y > 20 && pos.y < 120){
+            }
+            else if(pos.x > 190 && pos.x < 340 && pos.y > 20 && pos.y < 120){
+            }
+            else if(pos.x > 360 && pos.x < 510 && pos.y > 20 && pos.y < 120){
+                g_opponent = 'hard';
+                g_mode = 'start';
             }
         }
         pos = getXY(canvas, click1);
