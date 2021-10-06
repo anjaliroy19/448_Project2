@@ -66,6 +66,15 @@ let rotateheight = 19;
 let img_startScreen = new Image();
 img_startScreen.src = 'Images/img_startScreen.png';
 
+let img_hit = new Image();
+img_hit.src = 'Images/hit.png';
+let hitwidth = 89;
+let hitheight = 59;
+
+let img_miss = new Image();
+img_miss.src = 'Images/miss.png';
+let misswidth = 89;
+let missheight = 59;
 /**
  * @description Main render function that calls the smaller gameplay render functions, unused
  * @see {@link gameplayLoop}
@@ -249,7 +258,13 @@ function switchTurn(context, canvas, nextPlayer) {
         context.fillStyle = "#feebeb";
         context.fillText("Player " + nextPlayer + " turn in", (canvas.width / 2) - (context.measureText("Player " + nextPlayer + " turn in").width / 2), canvas.height / 3);
         context.fillText("2", (canvas.width / 2) - (context.measureText("2").width / 2), canvas.height * 2 / 3);
-    })
+	//displays hit or miss message
+	if(fire == 0){
+		context.drawImage(img_miss, (canvas.width / 2) - (3 * misswidth), canvas.height / 4, misswidth * 6, missheight *6);
+	} else {
+	context.drawImage(img_hit, (canvas.width / 2) - (3 * hitwidth), canvas.height / 4, hitwidth * 6, hitheight * 6);
+   	}
+	})
 
     waitTime2.then(() => {
         clearScreen(context);
