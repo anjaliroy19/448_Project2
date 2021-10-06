@@ -276,6 +276,8 @@ function rightsideClickEventRegister() {
         }
         else if(g_opponent == "hard"){
             if (g_currentPlayer == 1 && fire(g_player2arr, flatten(i,j))) {
+                console.log('current player is 1');
+                console.log(g_player1arr, g_player2arr)
                 if (winCheck(g_player2arr)) {
                     g_winner = 1;
                     g_mode = "win";
@@ -283,6 +285,7 @@ function rightsideClickEventRegister() {
                     switchPlayers("game");
                 }
             } else if (g_currentPlayer == 2 && fireHard(g_player1arr)){
+                console.log('current player is 2');
                 if (winCheck(g_player1arr)) {
                     g_winner = 2;
                     g_mode = "win";
@@ -330,18 +333,19 @@ function centerClickEventRegister() {
         if (i < 0 || i > 9 || j < 0 || j > 8) {
             return;
         }
-        
-        if (g_currentPlayer == 1) {
-            newShips = placeShip(g_player1arr, g_mousePos, g_currShipLength, g_currShipRotation);
-            if (!newShips.every((el, ix) => el === g_player1arr[ix])) {
-                g_player1arr = newShips;
-                g_currShipLength++;
-            }
-        } else if (g_currentPlayer == 2) {
-            newShips = placeShip(g_player2arr, g_mousePos, g_currShipLength, g_currShipRotation);
-            if (!newShips.every((el, ix) => el === g_player2arr[ix])) {
-                g_player2arr = newShips;
-                g_currShipLength++;
+        if(g_mode == "start"){
+            if (g_currentPlayer == 1) {
+                newShips = placeShip(g_player1arr, g_mousePos, g_currShipLength, g_currShipRotation);
+                if (!newShips.every((el, ix) => el === g_player1arr[ix])) {
+                    g_player1arr = newShips;
+                    g_currShipLength++;
+                }
+            } else if (g_currentPlayer == 2) {
+                newShips = placeShip(g_player2arr, g_mousePos, g_currShipLength, g_currShipRotation);
+                if (!newShips.every((el, ix) => el === g_player2arr[ix])) {
+                    g_player2arr = newShips;
+                    g_currShipLength++;
+                }
             }
         }
     })
