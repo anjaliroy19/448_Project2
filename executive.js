@@ -140,9 +140,11 @@ function fire(arr, pos) {
 	//Get value stored where shot was placed
     if (arr[pos] == 1) { //only executes if un-hit ship is detected
         arr[pos] = 2;
+	g_hit = true;
         return true;
     } else if (arr[pos] == 0) { //executes if uninteracted cell is detected
         arr[pos] = 3;
+	g_hit = false;
         return true;
     }
     return false;

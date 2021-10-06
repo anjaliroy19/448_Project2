@@ -12,7 +12,7 @@ let g_canvas;
 let g_context;
 let g_mode = "unstarted";
 let g_potMove = '';
-
+let g_hit = false;
 let AI = 1;
 
 let g_opponent = '';

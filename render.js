@@ -259,7 +259,7 @@ function switchTurn(context, canvas, nextPlayer) {
         context.fillText("Player " + nextPlayer + " turn in", (canvas.width / 2) - (context.measureText("Player " + nextPlayer + " turn in").width / 2), canvas.height / 3);
         context.fillText("2", (canvas.width / 2) - (context.measureText("2").width / 2), canvas.height * 2 / 3);
 	//displays hit or miss message
-	if(fire == 0){
+	if(g_hit == 0){
 		context.drawImage(img_miss, (canvas.width / 2) - (3 * misswidth), canvas.height / 4, misswidth * 6, missheight *6);
 	} else {
 	context.drawImage(img_hit, (canvas.width / 2) - (3 * hitwidth), canvas.height / 4, hitwidth * 6, hitheight * 6);
