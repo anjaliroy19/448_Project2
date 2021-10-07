@@ -15,6 +15,11 @@ let g_potMove = '';
 let g_hit = false;
 let AI = 1;
 
+let g_firstHit = '\0';
+let g_lastMove = '\0';
+let g_currentMove = '\0';
+let g_sunkShipsByAI = 0;
+
 let g_opponent = '';
 
 //taken from https://github.com/gsburmaster/Connect4
