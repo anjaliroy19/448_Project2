@@ -282,7 +282,7 @@ function fireMed(arr) {
 			}
 		}
 		else if ((g_lastMove - g_firstHit)%10 == 0 && g_lastMove > g_firstHit) {//if the last move was down from the first hit
-			if (arr[g_lastMove] == 7 && tryFireDirection(arr, g_lastMove, "down") {
+			if (arr[g_lastMove] == 7 && tryFireDirection(arr, g_lastMove, "down")) {
 				g_lastMove = g_currentMove;
 				return true;
 			}
