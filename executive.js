@@ -310,6 +310,40 @@ function fireMed(arr) {
 	
 }
 
+tryFireDirection(arr, fromPos, direction) {
+	let max;
+	let c; //coefficient
+	
+	if (direction == "up" || direction == "down") {
+		max = 9;
+		c = 10;
+	}
+	else if (direction == "left" || direction == "right") {
+		max = 10;
+		c= = 1;
+	}
+	else {
+		return false;
+	}
+	
+	if (direction == "up" || direction == "left") {
+		c = c*(-1);
+	}
+	
+	for (let i = 1; i<max; i++) {
+		tempPos = fromPos + c*i;
+		if (tempPos >= arr.length || fromPos < 0 || ((direction == "right" || direction == "left") && unflattenY(fromPos) != unflattenY(tempPos))) { //if moving up is outside of the array
+			i = max;
+		}
+		else if (fire(arr, tempPos)) {
+			currentMove = tempPos;
+			return true;
+		}
+	}
+	
+	return false;
+}
+
 /**
  * @desc This function places ships
  * @param {number[]} arr the grid the ship is being placed on
