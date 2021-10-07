@@ -158,6 +158,158 @@ function fireHard(arr) {
     }
 }
 
+function fireMed(arr) {
+	
+	if (arr[g_lastMove] == 7 && g_firstHit == '\0') { //if the last move was a hit and we have not already hit a ship that we have not sunk
+		g_firstHit = g_lastMove;
+	}
+	else if (arr[g_lastMove] == 7 && g_firstHit != '\0') { //if the last move was a hit and we still have a first hit stored
+		let numSunk = 0;
+		//checks number of ships sunk
+		for (let i = 1; i<=g_maxShips; i++) {
+			if (!arr.includes(i)) {
+				numSunk++;
+			}
+		}
+		//if we sunk another ship last turn
+		if (numSunk > g_sunkShipsByAI) {
+			g_sunkShipsByAI = numSunk;
+			g_firstHit = '\0';
+		}
+	}
+	
+	//from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+	if (g_firstHit == '\0') { //if there was no previous hit that did not already sink a ship
+		do {
+			g_currentMove = Math.random()*(arr.length-1); //randomize position of hit
+		} while (!fire(arr, g_currentMove)) //until the move is valid
+		g_lastMove = g_currentMove;
+		return true;
+	}
+	else if (g_lastMove == g_firstHit) { //last move was the first hit on that ship
+		
+		if (tryFireDirection(arr, g_lastMove, "up")) {
+			g_lastMove = g_currentMove;
+			return true;
+		}
+		else if (tryFireDirection(arr, g_lastMove, "right")) {
+			g_lastMove = g_currentMove;
+			return true;
+		}
+		else if (tryFireDirection(arr, g_lastMove, "down")) {
+			g_lastMove = g_currentMove;
+			return true;
+		}
+		else if (tryFireDirection(arr, g_lastMove, "left")) {
+			g_lastMove = g_currentMove;
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	else {//if we have hit a ship that was not sunk but it was not the last move
+		if  ( (g_lastMove - g_firstHit)%10 == 0 && g_lastMove < g_firstHit) { //if last move was up from first hit
+			if (arr[g_lastMove] == 7) { //if last move was a hit
+				if (tryFireDirection(arr, g_lastMove, "up")) {
+					g_lastMove = g_currentMove;
+					return true;
+				}
+				else if (tryFireDirection(arr, g_firstHit, "right")) {
+					g_lastMove = g_currentMove;
+					return true;
+				}	
+				else if (tryFireDirection(arr, g_firstHit, "down")) {
+					g_lastMove = g_currentMove;
+					return true;
+				}
+				else if (tryFireDirection(arr, g_firstHit, "left")) {
+					g_lastMove = g_currentMove;
+					return true;
+				}
+				else {
+					return false;
+				}	 	 
+			}
+			else { //if last move was up from first hit but was not a hit
+				if (tryFireDirection(arr, g_firstHit, "right")) {
+					g_lastMove = g_currentMove;
+					return true;
+				}	
+				else if (tryFireDirection(arr, g_firstHit, "down")) {
+					g_lastMove = g_currentMove;
+					return true;
+				}
+				else if (tryFireDirection(arr, g_firstHit, "left")) {
+					g_lastMove = g_currentMove;
+					return true;
+				}
+				else {
+					return false;
+				}	 	 
+			}
+		}
+		else if ((g_lastMove - g_firstHit)%10 != 0 && g_lastMove > g_firstHit) { //if the last move was to the right of the first hit
+			if (arr[g_lastMove] == 7) {
+				if (tryFireDirection(arr, g_lastMove, "right")) {
+					g_lastMove = g_currentMove;
+					return true;
+				}
+				else if (tryFireDirection(arr, g_firstHit, "down")) {
+					g_lastMove = g_currentMove;
+					return true;
+				}
+				else if (tryFireDirection(arr, g_firstHit, "left")) {
+					g_lastMove = g_currentMove;
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else { //if the last move was not a hit
+				if (tryFireDirection(arr, g_firstHit, "down")) {
+					g_lastMove = g_currentMove;
+					return true;
+				}
+				else if (tryFireDirection(arr, g_firstHit, "left")) {
+					g_lastMove = g_currentMove;
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+		}
+		else if ((g_lastMove - g_firstHit)%10 == 0 && g_lastMove > g_firstHit) {//if the last move was down from the first hit
+			if (arr[g_lastMove] == 7 && tryFireDirection(arr, g_lastMove, "down") {
+				g_lastMove = g_currentMove;
+				return true;
+			}
+			else if (tryFireDirection(arr, g_firstHit, "left")) {
+				g_lastMove = g_currentMove;
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {//if the last move was left from the first hit
+			if (arr[g_lastMove] == 7 && tryFireDirection(arr, g_lastMove, "left")) {
+				g_lastMove = g_currentMove;
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		return false;
+	}
+
+	g_lastMove = g_currentMove;
+	
+}
+
 /**
  * @desc This function places ships
  * @param {number[]} arr the grid the ship is being placed on
