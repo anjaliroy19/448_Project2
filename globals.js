@@ -299,17 +299,17 @@ function rightsideClickEventRegister() {
                 }
             }
         }
-		else if (g_opponent == "medium") {
-		//copied from above for hard
-			if (g_currentPlayer == 1 && fire(g_player2arr, flatten(i,j))) {
-                console.log('current player is 1');
-                console.log(g_player1arr, g_player2arr)
-                if (winCheck(g_player2arr)) {
-                    g_winner = 1;
-                    g_mode = "win";
-                } else {
-                    switchPlayers("game");
-                }
+	else if (g_opponent == "medium") {
+	//copied from above for hard
+		if (g_currentPlayer == 1 && fire(g_player2arr, flatten(i,j))) {
+                	console.log('current player is 1');
+                	console.log(g_player1arr, g_player2arr)
+               		if (winCheck(g_player2arr)) {
+                    		g_winner = 1;
+                    		g_mode = "win";
+                	} else {
+                    	switchPlayers("game");
+                	}
             } else if (g_currentPlayer == 2 && fireMed(g_player1arr)){
                 console.log('current player is 2');
                 if (winCheck(g_player1arr)) {
@@ -319,6 +319,7 @@ function rightsideClickEventRegister() {
                     switchPlayers("game");
                 }
             }
+		}
     })
 }
 
