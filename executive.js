@@ -182,7 +182,7 @@ function generateRandomPosition(){
 	//Get value stored where shot was placed
     if (arr[pos] == 1 || arr[pos] == 2 || arr[pos] == 3 || arr[pos] == 4 || arr[pos] == 5 || arr[pos] == 6) { //only executes if un-hit ship is detected
         arr[pos] = 7;
-	//g_hit = true;
+	g_hit = 1;
         return true;
     } else if (arr[pos] == 0) { //executes if uninteracted cell is detected
         arr[pos] = 8;
