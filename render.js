@@ -1,5 +1,5 @@
-/*    NOTES FOR WHOEVER ENDS UP WITH MY LOOSE ENDS:
 
+/*    NOTES FOR WHOEVER ENDS UP WITH MY LOOSE ENDS:
 I am sorry that I didn't get as much done as discussed. I had to do a pretty significant refactor to pass the grids as objects (which makes eventlisteners more mobile and made rendering ships pretty easy.)
 Event Listeners for buttons are not coded (I think you wanted to do it separately Logan?)
 render needs to be handed blank data in the DOMCONTENTLOADED eventlistener. It isn't right now.
@@ -8,9 +8,7 @@ that stuff should have to happen in the event listener
 startScreen is unfinished, as I didn't even get close to rotate. 
 the Fire eventlistener needs to be the thing to call switchTurn and update data and such (imo)
 If you have any questions, have dom text me. I won't be looking at discord, but if its urgent I can try to help
-
 -Gage
-
 */
 
 //adapted from https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images
@@ -264,7 +262,7 @@ function switchTurn(context, canvas, nextPlayer) {
 	} else {
 	context.drawImage(img_hit, (canvas.width / 2) - (3 * hitwidth), canvas.height / 4, hitwidth * 6, hitheight * 6);
    	}
-	})
+	});
 
     waitTime2.then(() => {
         clearScreen(context);
@@ -274,11 +272,11 @@ function switchTurn(context, canvas, nextPlayer) {
         context.fillStyle = "#feebeb";
         context.fillText("Player " + nextPlayer + " turn in", (canvas.width / 2) - (context.measureText("Player " + nextPlayer + " turn in").width / 2), canvas.height / 3);
         context.fillText("1", (canvas.width / 2) - (context.measureText("1").width / 2), canvas.height * 2 / 3);
-    })
+    });
 
     waitTime1.then(() => {
         clearScreen(context);
-    })
+    });
 }
 
 /**
@@ -368,29 +366,29 @@ function drawGrid(context, grid) {
  * @param {Object} grid - grid variable
  * @param {boolean} ownShips - variable for tracking your own ships
  */
-function renderShips(context, arr, grid, ownShips)
-{
-    drawGrid(context, grid);
-    for (let i=0; i < 90; i++)
-    {
-        if (arr[i] == 0)
-        {
-            
-        }
-        else if (arr[i] == 1 && ownShips)
-        {
-            context.fillStyle = "Grey";
-            context.fillRect(grid.rightmost + ((grid.totalwidth/10) /4 ) + (grid.totalwidth/10)*unflattenX(i) , grid.heightmost + ((grid.totalheight/10) /4 ) +  (grid.totalheight/9)*unflattenY(i), (grid.totalheight/10)/2, (grid.totalheight/9)/2 );
-        }
-        else if (arr[i] == 2)
-        {
-            context.fillStyle = "Red";
-            context.fillRect(grid.rightmost + ((grid.totalwidth/10) /4 ) + (grid.totalwidth/10)*unflattenX(i) , grid.heightmost + ((grid.totalheight/10) /4 ) +  (grid.totalheight/9)*unflattenY(i), (grid.totalheight/10)/2, (grid.totalheight/9)/2 );
-        }
-        else if (arr[i] == 3)
-        {
-            context.fillStyle = "Blue";
-            context.fillRect(grid.rightmost + ((grid.totalwidth/10) /4 ) + (grid.totalwidth/10)*unflattenX(i) , grid.heightmost + ((grid.totalheight/10) /4 ) +  (grid.totalheight/9)*unflattenY(i), (grid.totalheight/10)/2, (grid.totalheight/9)/2 );
-        }
-    }
-}
+ function renderShips(context, arr, grid, ownShips)
+ {
+     drawGrid(context, grid);
+     for (let i=0; i < 90; i++)
+     {
+         if (arr[i] == 0)
+         {
+             
+         }
+         else if ((arr[i] == 1 || arr[i] == 2 || arr[i] == 3 ||arr[i] == 4 || arr[i] == 5 || arr[i] == 6) && ownShips)
+         {
+             context.fillStyle = "Grey";
+             context.fillRect(grid.rightmost + ((grid.totalwidth/10) /4 ) + (grid.totalwidth/10)*unflattenX(i) , grid.heightmost + ((grid.totalheight/10) /4 ) +  (grid.totalheight/9)*unflattenY(i), (grid.totalheight/10)/2, (grid.totalheight/9)/2 );
+         }
+         else if (arr[i] == 7)
+         {
+             context.fillStyle = "Red";
+             context.fillRect(grid.rightmost + ((grid.totalwidth/10) /4 ) + (grid.totalwidth/10)*unflattenX(i) , grid.heightmost + ((grid.totalheight/10) /4 ) +  (grid.totalheight/9)*unflattenY(i), (grid.totalheight/10)/2, (grid.totalheight/9)/2 );
+         }
+         else if (arr[i] == 8)
+         {
+             context.fillStyle = "Blue";
+             context.fillRect(grid.rightmost + ((grid.totalwidth/10) /4 ) + (grid.totalwidth/10)*unflattenX(i) , grid.heightmost + ((grid.totalheight/10) /4 ) +  (grid.totalheight/9)*unflattenY(i), (grid.totalheight/10)/2, (grid.totalheight/9)/2 );
+         }
+     }
+ }
