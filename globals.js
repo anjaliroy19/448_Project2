@@ -7,7 +7,6 @@ let g_currShipRotation = 0;
 let g_player1arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 let g_player2arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 let g_mousePos = 0;
-let g_numSwitch = 0;
 //portions adapted from https://github.com/gsburmaster/Connect4
 let g_canvas;
 let g_context;
@@ -15,6 +14,8 @@ let g_mode = "unstarted";
 let g_potMove = '';
 let g_hit = false;
 let AI = 1;
+g_numShips1 = 0;
+g_numShips2 = 0;
 
 let g_firstHit = '\0';
 let g_lastMove = '\0';
@@ -369,6 +370,8 @@ function centerClickEventRegister() {
        	   	g_mode = 'start';	    
             }
             else if(pos.x > 190 && pos.x < 340 && pos.y > 20 && pos.y < 120){
+		g_opponent = 'medium';
+		g_mode = 'start';
             }
             else if(pos.x > 360 && pos.x < 510 && pos.y > 20 && pos.y < 120){
                 g_opponent = 'hard';
@@ -385,12 +388,14 @@ function centerClickEventRegister() {
                 newShips = placeShip(g_player1arr, g_mousePos, g_currShipLength, g_currShipRotation);
                 if (!newShips.every((el, ix) => el === g_player1arr[ix])) {
                     g_player1arr = newShips;
+		    g_numShips1++;
                     g_currShipLength++;
                 }
             } else if (g_currentPlayer == 2) {
                 newShips = placeShip(g_player2arr, g_mousePos, g_currShipLength, g_currShipRotation);
                 if (!newShips.every((el, ix) => el === g_player2arr[ix])) {
                     g_player2arr = newShips;
+		    g_numShips2++;
                     g_currShipLength++;
                 }
             }
