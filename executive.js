@@ -177,6 +177,13 @@ function generateRandomPosition(){
  * @param {number} pos the position being fired at
  * @returns {boolean} whether the position is valid
  */
+
+function updateScore(p1score, p2score) {
+	document.getElementById("p1score").innerHTML = "Player 1 Score: " + p1score;
+	document.getElementById("p2score").innerHTML = "Player 2 Score: " + p2score;
+}
+
+
  function fire(arr, pos) {
 	
 	//Get value stored where shot was placed
