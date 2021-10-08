@@ -197,8 +197,13 @@ function switchPlayers(mode) {
 
 function generateRandomPosition(){
     let AIpos = 0;
+    let AIrot = 0;
     AIpos = Math.random() * 89; //generates random num betwene 0 and 89
+    AIrot = Math.random();
     AIpos = parseInt(AIpos);
+    AIrot = Math.round(AIrot);
+    g_currShipRotation = AIrot;
+    console.log(g_currShipRotation);
     console.log(AIpos);// for debugging purposes
     newShips = placeShip(g_player2arr, AIpos, g_currShipLength, g_currShipRotation); //taken from gage's code
     if (!newShips.every((el, ix) => el === g_player2arr[ix])) { //taken from gage's code
