@@ -201,6 +201,22 @@ function fireHard(arr) {
     }
 }
 
+function fireEasy(arr) {
+    let spot = 0;
+    spot = Math.floor(Math.random() * 89);
+    console.log("spot: " + spot);
+    if(arr[spot] == 0) {
+      arr[spot] = 8;
+      return true;
+    }
+    else if(arr[spot] > 0 && arr[spot] < 7) {
+      arr[spot] = 7;
+      return true;
+    }
+    return false;
+}
+
+
 function fireMed(arr) {
 	
 	if (arr[g_lastMove] == 7 && g_firstHit == '\0') { //if the last move was a hit and we have not already hit a ship that we have not sunk
@@ -219,21 +235,6 @@ function fireMed(arr) {
 			g_sunkShipsByAI = numSunk;
 			g_firstHit = '\0';
 		}
-}
-
-function fireEasy(arr) {
-    let spot = 0;
-    spot = Math.floor(Math.random() * 89);
-    console.log(spot);
-    if(arr[spot] == 0) {
-      arr[spot] = 8;
-      return true;
-    }
-    else if(arr[spot] > 0 && arr[spot] < 7) {
-      arr[spot] = 7;
-      return true;
-    }
-    return false;
 }
 
 	
