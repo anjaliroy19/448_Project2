@@ -143,7 +143,7 @@ function renderMenu1(context, canvas) {
     context.stroke();
 
     context.beginPath();
-    context.rect(190, 20, 150, 100);
+    context.rect(190, 20, 170, 100);
     context.stroke();
 
     context.font = "10pt sans-serif";
