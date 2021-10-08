@@ -73,6 +73,12 @@ let img_miss = new Image();
 img_miss.src = 'Images/miss.png';
 let misswidth = 89;
 let missheight = 59;
+
+let img_sunk = new Image();
+img_sunk.src = 'Images/sunk.png';
+let sunkwidth = 89;
+let sunkheight = 59;
+
 /**
  * @description Main render function that calls the smaller gameplay render functions, unused
  * @see {@link gameplayLoop}
@@ -260,7 +266,11 @@ function switchTurn(context, canvas, nextPlayer) {
     if (g_numSwitch > 1){
         if(g_hit == 0){
             context.drawImage(img_miss, (canvas.width / 2) - (3 * misswidth), canvas.height / 4, misswidth * 6, missheight *6);
-        } else {
+        }else if (g_hit == 2){
+		context.drawImage(img_sunk, (canvas.width / 2) - (3 *sunkwidth), canvas.height / 4, sunkwidth *6, sunkheight * 6);
+		g_hit = 0;
+	}
+	    else {
             context.drawImage(img_hit, (canvas.width / 2) - (3 * hitwidth), canvas.height / 4, hitwidth * 6, hitheight * 6);
             g_hit = 0;
         }

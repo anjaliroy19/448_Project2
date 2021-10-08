@@ -208,6 +208,7 @@ function generateRandomPosition(){
     newShips = placeShip(g_player2arr, AIpos, g_currShipLength, g_currShipRotation); //taken from gage's code
     if (!newShips.every((el, ix) => el === g_player2arr[ix])) { //taken from gage's code
         g_player2arr = newShips;
+	g_numShips2++;    
         g_currShipLength++;
     }
     return AIpos;
@@ -262,13 +263,17 @@ function fireMed(arr) {
 		let spot = 0;
     	spot = Math.floor(Math.random() * 89);
    		console.log(spot);
+		let temp_ship = 0;
     	if(arr[spot] == 0) {
       		arr[spot] = 8;
       		return true;
     	}
     	else if(arr[spot] > 0 && arr[spot] < 7) {
-      		arr[spot] = 7;
-      		return true;
+      		temp_ship = arr[spot];
+		arr[spot] = 7;
+      		g_hit = 1;
+		scoreCheck(arr, temp_ship);
+		return true;
     		}
     	return false;
 		/*do {
@@ -436,10 +441,13 @@ function tryFireDirection(arr, fromPos, direction) {
 }
 
 function fireHard(arr) {
+	let temp_ship = 0;
 	for(let i = 0; i < arr.length; i++){
         if(arr[i] == 1 || arr[i] == 2 || arr[i] == 3 || arr[i] == 4 || arr[i] == 5 || arr[i] == 6){
-            arr[i] = 7;
+            temp_ship = arr[i];
+	    arr[i] = 7;
 	    g_hit = 1;
+	    scoreCheck(arr, temp_ship);	
             console.log('hit');
             return true;
         }
@@ -448,6 +456,7 @@ function fireHard(arr) {
 
 function fireEasy(arr) {
     let spot = 0;
+    let temp_ship = 0;
     spot = Math.floor(Math.random() * 89);
     console.log(spot);
     if(arr[spot] == 0) {
@@ -455,7 +464,9 @@ function fireEasy(arr) {
       return true;
     }
     else if(arr[spot] > 0 && arr[spot] < 7) {
+      temp_ship = arr[spot];
       arr[spot] = 7;
+      scoreCheck(arr, temp_ship);
       g_hit = 1;
       return true;
     }
@@ -480,6 +491,7 @@ console.log("count: " + count);
     if(count == 0)  {
 console.log('we here');
         g_numShips2 = g_numShips2-1;
+	    g_hit = 2;
       }  
   }
   else if(g_currentPlayer == 2)  {
@@ -491,7 +503,9 @@ console.log('we here');
 	console.log("count: " + count);
     if(count == 0)  {
 console.log('we here');
-        g_numShips1 = g_numShips1-1;
+    
+	 g_numShips1 = g_numShips1-1;
+	    g_hit = 2;
     }  
   }
   console.log(g_numShips1);

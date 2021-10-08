@@ -13,7 +13,7 @@ let g_canvas;
 let g_context;
 let g_mode = "unstarted";
 let g_potMove = '';
-let g_hit = false;
+let g_hit = 0;
 let AI = 1;
 g_numShips1 = 0;
 g_numShips2 = 0;
