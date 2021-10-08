@@ -457,6 +457,11 @@ function fireEasy(arr) {
     return false;
 }
 
+function updateScoreBoard(p1score, p2score){
+	document.getElementById("p1score").innerHTML = "Player 1 Ships: " + p1score;
+	document.getElementById("p2score").innerHTML = "Player 2 Ships: " + p2score;
+}
+
 function scoreCheck(arr, ship) {
   //console.log(ship);
   let count = 0;
@@ -466,8 +471,10 @@ function scoreCheck(arr, ship) {
 	count++;
       }
     }
+console.log("count: " + count);
     if(count == 0)  {
-        g_numships2 = g_numShips2-1;
+console.log('we here');
+        g_numShips2 = g_numShips2-1;
       }  
   }
   else if(g_currentPlayer == 2)  {
@@ -476,12 +483,15 @@ function scoreCheck(arr, ship) {
 	count++;
       }
     }
+	console.log("count: " + count);
     if(count == 0)  {
-        g_numships1 = g_numShips1-1;
+console.log('we here');
+        g_numShips1 = g_numShips1-1;
     }  
   }
   console.log(g_numShips1);
   console.log(g_numShips2);
+	updateScoreBoard(g_numShips1, g_numShips2);
 }
 
 
