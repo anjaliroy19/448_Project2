@@ -215,11 +215,12 @@ function fireEasy(arr) {
     console.log("spot: " + spot);
     if(arr[spot] == 0) {
       arr[spot] = 8;
-      g_hit = 1;
+
       return true;
     }
     else if(arr[spot] > 0 && arr[spot] < 7) {
       arr[spot] = 7;
+      g_hit = 1;
       return true;
     }
     return false;
