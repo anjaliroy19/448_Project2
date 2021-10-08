@@ -59,6 +59,44 @@ function gameplayLoop() {
         }
     }
 
+if (g_mode == "start" && g_opponent == "medium") { //COPY AND PASTED FROM AI FOR HARD
+        if (AI == 1){
+            if (g_currentPlayer == 1) {
+                renderPlacementScreen(g_context, g_canvas, placeShip(g_player1arr, g_mousePos, g_currShipLength, g_currShipRotation));
+                if (g_currShipLength > g_maxShips) {
+                    switchPlayers("start");
+                    g_currShipLength = 1;
+                    g_currShipRotation = 0;
+                    g_mousePos = 0;
+                }
+            }
+            else if (g_currentPlayer == 2){
+                //generate randomPos and rotation (plus check that Ship length is updating)
+                let AIpos = generateRandomPosition();
+                placeShip(g_player2arr, AIpos, g_currShipLength, g_currShipRotation);
+                if (g_currShipLength > g_maxShips) {
+                    switchPlayers("game");
+                }
+            }
+        }
+        else{
+            if (g_currentPlayer == 1) {
+                renderPlacementScreen(g_context, g_canvas, placeShip(g_player1arr, g_mousePos, g_currShipLength, g_currShipRotation));
+                if (g_currShipLength > g_maxShips) {
+                    switchPlayers("start");
+                    g_currShipLength = 1;
+                    g_currShipRotation = 0;
+                    g_mousePos = 0;
+                }
+            }
+            else if (g_currentPlayer == 2) {
+                renderPlacementScreen(g_context, g_canvas, placeShip(g_player2arr, g_mousePos, g_currShipLength, g_currShipRotation));
+                if (g_currShipLength > g_maxShips) {
+                    switchPlayers("game");
+                }
+            }
+        }
+    }
 
 
     if (g_mode == "start" && g_opponent == "hard") {
@@ -167,7 +205,6 @@ function generateRandomPosition(){
         g_player2arr = newShips;
         g_currShipLength++;
     }
-
     return AIpos;
 }
 
@@ -177,19 +214,14 @@ function generateRandomPosition(){
  * @param {number} pos the position being fired at
  * @returns {boolean} whether the position is valid
  */
-
-function updateScore(p1score, p2score) {
-	document.getElementById("p1score").innerHTML = "Player 1 Score: " + p1score;
-	document.getElementById("p2score").innerHTML = "Player 2 Score: " + p2score;
-}
-
-
  function fire(arr, pos) {
-	
+	let temp_ship = 0;
 	//Get value stored where shot was placed
     if (arr[pos] == 1 || arr[pos] == 2 || arr[pos] == 3 || arr[pos] == 4 || arr[pos] == 5 || arr[pos] == 6) { //only executes if un-hit ship is detected
-        arr[pos] = 7;
+        temp_ship = arr[pos];        
+	arr[pos] = 7;
 	g_hit = 1;
+	scoreCheck(arr, temp_ship);
         return true;
     } else if (arr[pos] == 0) { //executes if uninteracted cell is detected
         arr[pos] = 8;
@@ -197,35 +229,6 @@ function updateScore(p1score, p2score) {
     }
     return false;
 }
-
-function fireHard(arr) {
-	for(let i = 0; i < arr.length; i++){
-        if(arr[i] == 1 || arr[i] == 2 || arr[i] == 3 || arr[i] == 4 || arr[i] == 5 || arr[i] == 6){
-            arr[i] = 7;
-	    g_hit = 1;
-            console.log('hit');
-            return true;
-        }
-    }
-}
-
-function fireEasy(arr) {
-    let spot = 0;
-    spot = Math.floor(Math.random() * 89);
-    console.log("spot: " + spot);
-    if(arr[spot] == 0) {
-      arr[spot] = 8;
-
-      return true;
-    }
-    else if(arr[spot] > 0 && arr[spot] < 7) {
-      arr[spot] = 7;
-      g_hit = 1;
-      return true;
-    }
-    return false;
-}
-
 
 function fireMed(arr) {
 	
@@ -250,10 +253,17 @@ function fireMed(arr) {
 	
 	//from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 	if (g_firstHit == '\0') { //if there was no previous hit that did not already sink a ship
-		do {
+		/*do {
 			g_currentMove = Math.random()*(arr.length-1); //randomize position of hit
 		} while (!fire(arr, g_currentMove)) //until the move is valid
+		*/
+		while (!fire(arr, g_currentMove)) {
+			g_currentMove = Math.random()*(arr.length-1);
+		}
+
 		g_lastMove = g_currentMove;
+
+
 		return true;
 	}
 	else if (g_lastMove == g_firstHit) { //last move was the first hit on that ship
@@ -414,6 +424,61 @@ function tryFireDirection(arr, fromPos, direction) {
 	return false;
 }
 
+function fireHard(arr) {
+	for(let i = 0; i < arr.length; i++){
+        if(arr[i] == 1 || arr[i] == 2 || arr[i] == 3 || arr[i] == 4 || arr[i] == 5 || arr[i] == 6){
+            arr[i] = 7;
+	    g_hit = 1;
+            console.log('hit');
+            return true;
+        }
+    }
+}
+
+function fireEasy(arr) {
+    let spot = 0;
+    spot = Math.floor(Math.random() * 89);
+    console.log(spot);
+    if(arr[spot] == 0) {
+      arr[spot] = 8;
+      return true;
+    }
+    else if(arr[spot] > 0 && arr[spot] < 7) {
+      arr[spot] = 7;
+      g_hit = 1;
+      return true;
+    }
+    return false;
+}
+
+function scoreCheck(arr, ship) {
+  //console.log(ship);
+  let count = 0;
+  if(g_currentPlayer == 1)  {
+    for(let i = 0; i < 90; i++) {
+      if(arr[i] == ship) {
+	count++;
+      }
+    }
+    if(count == 0)  {
+        g_numships2 = g_numShips2-1;
+      }  
+  }
+  else if(g_currentPlayer == 2)  {
+    for(let i = 0; i < 90; i++) {
+      if(arr[i] == ship) {
+	count++;
+      }
+    }
+    if(count == 0)  {
+        g_numships1 = g_numShips1-1;
+    }  
+  }
+  console.log(g_numShips1);
+  console.log(g_numShips2);
+}
+
+
 /**
  * @desc This function places ships
  * @param {number[]} arr the grid the ship is being placed on
@@ -443,8 +508,7 @@ function placeShip(arr, pos, shipLength, shipRotation) {
             newArr[i] = shipLength;
         }
     }
-
-	return newArr;
+    return newArr;
 }
 
 /**
