@@ -390,6 +390,7 @@ function centerClickEventRegister() {
                 if (!newShips.every((el, ix) => el === g_player1arr[ix])) {
                     g_player1arr = newShips;
 		    g_numShips1++;
+			updateScoreBoard(g_numShips1, g_numShips1);
                     g_currShipLength++;
                 }
             } else if (g_currentPlayer == 2) {
