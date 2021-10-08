@@ -248,23 +248,29 @@ function fireMed(arr) {
 			g_sunkShipsByAI = numSunk;
 			g_firstHit = '\0';
 		}
-}
+	}
 
 	
 	//from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 	if (g_firstHit == '\0') { //if there was no previous hit that did not already sink a ship
+		
+		let spot = 0;
+    	spot = Math.floor(Math.random() * 89);
+   		console.log(spot);
+    	if(arr[spot] == 0) {
+      		arr[spot] = 8;
+      		return true;
+    	}
+    	else if(arr[spot] > 0 && arr[spot] < 7) {
+      		arr[spot] = 7;
+      		return true;
+    		}
+    	return false;
 		/*do {
 			g_currentMove = Math.random()*(arr.length-1); //randomize position of hit
 		} while (!fire(arr, g_currentMove)) //until the move is valid
-		*/
-		while (!fire(arr, g_currentMove)) {
-			g_currentMove = Math.random()*(arr.length-1);
-		}
-
 		g_lastMove = g_currentMove;
-
-
-		return true;
+		return true;*/
 	}
 	else if (g_lastMove == g_firstHit) { //last move was the first hit on that ship
 		
@@ -383,9 +389,9 @@ function fireMed(arr) {
 				return false;
 			}
 		}
-		return false;
+		
 	}
-
+	return false;
 	g_lastMove = g_currentMove;
 	
 }
