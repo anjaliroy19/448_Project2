@@ -238,42 +238,59 @@ function generateRandomPosition(){
 
 function fireMed(arr) {
 	
-	if (arr[g_lastMove] == 7 && g_firstHit == '\0') { //if the last move was a hit and we have not already hit a ship that we have not sunk
-		g_firstHit = g_lastMove;
-	}
-	else if (arr[g_lastMove] == 7 && g_firstHit != '\0') { //if the last move was a hit and we still have a first hit stored
+	if (arr[g_lastMove] == 7) {
+		if (g_firstHit == '\0') {
+			console.log("last move was first hit, storing first hit");
+			g_firstHit = g_lastMove;
+		}
 		let numSunk = 0;
-		//checks number of ships sunk
+		console.log("checking if last move sunk a ship");
 		for (let i = 1; i<=g_maxShips; i++) {
+			console.log("inside the for loop");
+			console.log("maxShips: ", g_maxShips);
+			console.log("arr.includes(i): ", arr.includes(i));
 			if (!arr.includes(i)) {
+				console.log("inside the if in the for loop");
 				numSunk++;
+				console.log("numSunk: ", numSunk);
 			}
 		}
+
+		console.log("got past the for loop");
+		console.log("sunk ships by ai: ", g_sunkShipsByAI);
+		console.log("numSunk: ", numSunk);
 		//if we sunk another ship last turn
 		if (numSunk > g_sunkShipsByAI) {
+			
 			g_sunkShipsByAI = numSunk;
+			console.log("sunk ships by ai after: ", g_sunkShipsByAI);
 			g_firstHit = '\0';
 		}
+
 	}
 
+	console.log("lastMove: ", g_lastMove);
+	console.log("g_firstHit: ", g_firstHit);
 	
 	//from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 	if (g_firstHit == '\0') { //if there was no previous hit that did not already sink a ship
-		
+		console.log("this move is random");
 		let spot = 0;
     	spot = Math.floor(Math.random() * 89);
+    	while (arr[spot] == 8 || arr[spot] == 7) {
+    		console.log("in while loop");
+    		spot = Math.floor(Math.random()*(arr.length-1));
+    	}
    		console.log(spot);
-		let temp_ship = 0;
     	if(arr[spot] == 0) {
       		arr[spot] = 8;
+      		g_lastMove = spot;
       		return true;
     	}
     	else if(arr[spot] > 0 && arr[spot] < 7) {
-      		temp_ship = arr[spot];
-		arr[spot] = 7;
-      		g_hit = 1;
-		scoreCheck(arr, temp_ship);
-		return true;
+      		arr[spot] = 7;
+      		g_lastMove = spot;
+      		return true;
     		}
     	return false;
 		/*do {
@@ -304,8 +321,11 @@ function fireMed(arr) {
 			return false;
 		}
 	}
-	else {//if we have hit a ship that was not sunk but it was not the last move
-		if  ( (g_lastMove - g_firstHit)%10 == 0 && g_lastMove < g_firstHit) { //if last move was up from first hit
+	else {//if we have hit a ship that was not sunk but it was not hit on the last move
+		console.log("got to this else statement");
+		console.log("last move: ", g_lastMove, "first hit: ", g_firstHit);
+		if  ( (g_lastMove - g_firstHit)%(-10) == 0 && g_lastMove < g_firstHit) { //if last move was up from first hit
+			console.log("the last move was up from the first hit");
 			if (arr[g_lastMove] == 7) { //if last move was a hit
 				if (tryFireDirection(arr, g_lastMove, "up")) {
 					g_lastMove = g_currentMove;
@@ -325,7 +345,8 @@ function fireMed(arr) {
 				}
 				else {
 					return false;
-				}	 	 
+				}
+
 			}
 			else { //if last move was up from first hit but was not a hit
 				if (tryFireDirection(arr, g_firstHit, "right")) {
@@ -346,6 +367,7 @@ function fireMed(arr) {
 			}
 		}
 		else if ((g_lastMove - g_firstHit)%10 != 0 && g_lastMove > g_firstHit) { //if the last move was to the right of the first hit
+			console.log("the last move was right from the first hit");
 			if (arr[g_lastMove] == 7) {
 				if (tryFireDirection(arr, g_lastMove, "right")) {
 					g_lastMove = g_currentMove;
@@ -378,6 +400,7 @@ function fireMed(arr) {
 			}
 		}
 		else if ((g_lastMove - g_firstHit)%10 == 0 && g_lastMove > g_firstHit) {//if the last move was down from the first hit
+			console.log("the last move was down from the first hit");
 			if (arr[g_lastMove] == 7 && tryFireDirection(arr, g_lastMove, "down")) {
 				g_lastMove = g_currentMove;
 				return true;
@@ -391,6 +414,7 @@ function fireMed(arr) {
 			}
 		}
 		else {//if the last move was left from the first hit
+			console.log("the last move was left from the first hit");
 			if (arr[g_lastMove] == 7 && tryFireDirection(arr, g_lastMove, "left")) {
 				g_lastMove = g_currentMove;
 				return true;
@@ -428,11 +452,11 @@ function tryFireDirection(arr, fromPos, direction) {
 	
 	for (let i = 1; i<max; i++) {
 		tempPos = fromPos + c*i;
-		if (tempPos >= arr.length || fromPos < 0 || ((direction == "right" || direction == "left") && unflattenY(fromPos) != unflattenY(tempPos))) { //if moving up is outside of the array
+		if (tempPos >= arr.length || fromPos < 0 || ((direction == "right" || direction == "left") && unflattenY(fromPos) != unflattenY(tempPos)) || arr[tempPos] == 8) { //if moving up is outside of the array
 			i = max;
 		}
-		else if (fire(arr, tempPos)) {
-			currentMove = tempPos;
+		else if (fire(arr, tempPos)) { //doesn't account for if the move is already a miss
+			g_currentMove = tempPos;
 			return true;
 		}
 	}
