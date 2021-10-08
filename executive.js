@@ -195,6 +195,7 @@ function fireHard(arr) {
 	for(let i = 0; i < arr.length; i++){
         if(arr[i] == 1 || arr[i] == 2 || arr[i] == 3 || arr[i] == 4 || arr[i] == 5 || arr[i] == 6){
             arr[i] = 7;
+	    g_hit = 1;
             console.log('hit');
             return true;
         }
@@ -207,6 +208,7 @@ function fireEasy(arr) {
     console.log("spot: " + spot);
     if(arr[spot] == 0) {
       arr[spot] = 8;
+      g_hit = 1;
       return true;
     }
     else if(arr[spot] > 0 && arr[spot] < 7) {
