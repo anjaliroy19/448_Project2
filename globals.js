@@ -265,7 +265,7 @@ function rightsideClickEventRegister() {
         if (i < 0 || i > 9 || j < 0 || j > 8) {
             return;
         }
-        if(g_opponent == "human"){
+        if(g_opponent == "human") {
             if (g_currentPlayer == 1 && fire(g_player2arr, flatten(i,j))) {
                 if (winCheck(g_player2arr)) {
                     g_winner = 1;
@@ -282,65 +282,27 @@ function rightsideClickEventRegister() {
                 }
             }
         }
-	else if(g_opponent == "easy"){ //ADDED FROM HARD AI
-            if (g_currentPlayer == 1 && fire(g_player2arr, flatten(i,j))) {
-                if (winCheck(g_player2arr)) {
+	    else {
+            if (/*g_currentPlayer == 1 &&*/ fire(g_player2arr, flatten(i,j))) {
+                if (winCheck(g_player1arr)) {
+                    g_winner = 2;
+                    g_mode = "win";
+                }
+                else if (winCheck(g_player2arr)) {
                     g_winner = 1;
                     g_mode = "win";
                 } else {
                     switchPlayers("game");
                 }
-            } else if (g_currentPlayer == 2 && fireEasy(g_player1arr)){
+            } /*else if (g_currentPlayer == 2 /*&& fireEasy(g_player1arr)){
                 if (winCheck(g_player1arr)) {
                     g_winner = 2;
                     g_mode = "win";
                 } else {
                     switchPlayers("game");
                 }
-            }
+            }*/
         }
-
-        else if(g_opponent == "hard"){
-            if (g_currentPlayer == 1 && fire(g_player2arr, flatten(i,j))) {
-                console.log('current player is 1');
-                console.log(g_player1arr, g_player2arr)
-                if (winCheck(g_player2arr)) {
-                    g_winner = 1;
-                    g_mode = "win";
-                } else {
-                    switchPlayers("game");
-                }
-            } else if (g_currentPlayer == 2 && fireHard(g_player1arr)){
-                console.log('current player is 2');
-                if (winCheck(g_player1arr)) {
-                    g_winner = 2;
-                    g_mode = "win";
-                } else {
-                    switchPlayers("game");
-                }
-            }
-        }
-	else if (g_opponent == "medium") {
-	//copied from above for hard
-		if (g_currentPlayer == 1 && fire(g_player2arr, flatten(i,j))) {
-                	console.log('current player is 1');
-                	console.log(g_player1arr, g_player2arr)
-               		if (winCheck(g_player2arr)) {
-                    		g_winner = 1;
-                    		g_mode = "win";
-                	} else {
-                    	switchPlayers("game");
-                	}
-            } else if (g_currentPlayer == 2 && fireMed(g_player1arr)){
-                console.log('current player is 2');
-                if (winCheck(g_player1arr)) {
-                    g_winner = 2;
-                    g_mode = "win";
-                } else {
-                    switchPlayers("game");
-                }
-            }
-		}
     })
 }
 
