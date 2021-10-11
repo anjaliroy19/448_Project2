@@ -235,7 +235,15 @@ function switchTurn(context, canvas, nextPlayer) {
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.font = "40px Impact";
     context.fillStyle = "#feebeb";
-    context.fillText("Player " + nextPlayer + " turn in", (canvas.width / 2) - (context.measureText("Player " + nextPlayer + " turn in").width / 2), canvas.height / 3);
+    if (g_opponent == 'human') {
+        context.fillText("Player " + nextPlayer + " turn in", (canvas.width / 2) - (context.measureText("Player " + nextPlayer + " turn in").width / 2), canvas.height / 3);
+    }
+    else {
+        context.fillText("AI taking turn", (canvas.width / 2) - (context.measureText("AI taking turn").width / 2), canvas.height / 3);
+        if (g_player2arr.includes(8) || g_player2arr.includes(7)) {
+            context.fillText("Your move was a:", (canvas.width / 2) - (context.measureText("Your move was a:").width / 2), canvas.height / 3 + 50);
+        }
+    }
     context.fillText("3", (canvas.width / 2) - (context.measureText("3").width / 2), canvas.height * 2 / 3);
     let waitTime3 = new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -260,7 +268,12 @@ function switchTurn(context, canvas, nextPlayer) {
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.font = "40px Impact";
         context.fillStyle = "#feebeb";
-        context.fillText("Player " + nextPlayer + " turn in", (canvas.width / 2) - (context.measureText("Player " + nextPlayer + " turn in").width / 2), canvas.height / 3);
+        if (g_opponent == 'human') {
+            context.fillText("Player " + nextPlayer + " turn in", (canvas.width / 2) - (context.measureText("Player " + nextPlayer + " turn in").width / 2), canvas.height / 3);
+        }
+        else {
+            context.fillText("AI taking turn", (canvas.width / 2) - (context.measureText("AI taking turn").width / 2), canvas.height / 3);
+        }
         context.fillText("2", (canvas.width / 2) - (context.measureText("2").width / 2), canvas.height * 2 / 3);
 	//displays hit or miss message
     if (g_numSwitch > 1){
@@ -284,7 +297,13 @@ function switchTurn(context, canvas, nextPlayer) {
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.font = "40px Impact";
         context.fillStyle = "#feebeb";
-        context.fillText("Player " + nextPlayer + " turn in", (canvas.width / 2) - (context.measureText("Player " + nextPlayer + " turn in").width / 2), canvas.height / 3);
+
+        if (g_opponent == 'human') {
+            context.fillText("Player " + nextPlayer + " turn in", (canvas.width / 2) - (context.measureText("Player " + nextPlayer + " turn in").width / 2), canvas.height / 3);
+        }
+        else {
+            context.fillText("AI taking turn", (canvas.width / 2) - (context.measureText("AI taking turn").width / 2), canvas.height / 3);
+        }
         context.fillText("1", (canvas.width / 2) - (context.measureText("1").width / 2), canvas.height * 2 / 3);
     });
 
